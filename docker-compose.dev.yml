@@ -1,0 +1,18 @@
+# Dev override: mount source + run with hot reload (ts-node-dev)
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      # Mount only src so code changes on host are reflected; node_modules stay from image
+      - ./src:/app/src
+    command: npm run dev
+    environment:
+      DB_HOST: postgres
+      DB_USER: app
+      DB_PASSWORD: password
+      DB_NAME: appdb
+      DB_PORT: "5432"
+      PORT: "3000"
