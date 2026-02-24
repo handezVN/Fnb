@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
 import healthRoutes from './healthRoutes';
 import authRoutes from './authRoutes';
+import adminRoutes from './adminRoutes';
+import storeRoutes from './storeRoutes';
 
 const router = Router();
 
@@ -12,8 +14,8 @@ router.use('/health', healthRoutes);
 // API v1
 const v1 = Router();
 v1.use('/auth', authRoutes);
-// v1.use('/admin', adminRoutes);
-// v1.use('/store', storeRoutes);
+v1.use('/admin', adminRoutes);
+v1.use('/store', storeRoutes);
 // v1.use('/customer', customerRoutes);
 // v1.use('/orders', ordersRoutes);
 // v1.use('/menu', menuRoutes);

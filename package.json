@@ -12,6 +12,7 @@
     "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
     "migrate": "ts-node scripts/migrate.ts",
     "seed": "ts-node scripts/seed-auth-user.ts",
+    "seed:api":"bash scripts/seed-data-curl.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
