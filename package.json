@@ -11,8 +11,9 @@
     "docker:down": "docker compose down",
     "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
     "migrate": "ts-node scripts/migrate.ts",
+    "migrate:2": "ts-node scripts/migrate-002.ts",
     "seed": "ts-node scripts/seed-auth-user.ts",
-    "seed:api":"bash scripts/seed-data-curl.sh",
+    "seed:api": "bash scripts/seed-data-curl.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.0.2",
     "pg": "^8.18.0",
     "uuid": "^11.0.3"
   },
@@ -30,6 +32,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
     "@types/node": "^22.10.0",
     "@types/pg": "^8.11.10",
     "@types/uuid": "^10.0.0",

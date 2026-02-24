@@ -5,6 +5,8 @@ import * as users from '../controllers/adminUsersController';
 import * as menus from '../controllers/adminMenusController';
 import * as categories from '../controllers/adminCategoriesController';
 import * as products from '../controllers/adminProductsController';
+import * as productImages from '../controllers/productImagesController';
+import { uploadSingle } from '../middleware/upload';
 
 const router = Router();
 
@@ -42,5 +44,11 @@ router.get('/products/:id', products.getProduct);
 router.post('/products', products.createProduct);
 router.put('/products/:id', products.updateProduct);
 router.patch('/products/:id/availability', products.patchProductAvailability);
+
+// Product images (thumbnail = product.image_url, gallery = product_images)
+router.get('/products/:productId/images', productImages.listProductImages);
+router.post('/products/:productId/images', uploadSingle, productImages.addProductImage);
+router.delete('/products/:productId/images/:imageId', productImages.deleteProductImage);
+router.put('/products/:productId/images/reorder', productImages.reorderProductImages);
 
 export default router;

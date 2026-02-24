@@ -7,6 +7,7 @@ import {
   ProductCreateInput,
   ProductUpdateInput,
 } from '../models/Product';
+import { PRODUCT_IMAGES_TABLE } from '../models/ProductImage';
 
 function normalizeProductPrice(row: Product): Product {
   if (row && typeof row.price === 'string') {
@@ -35,7 +36,12 @@ export async function getProduct(req: AuthRequest, res: Response): Promise<void>
       res.status(404).json({ error: 'Product not found' });
       return;
     }
-    res.json(normalizeProductPrice(result.rows[0]));
+    const product = normalizeProductPrice(result.rows[0]);
+    const imagesResult = await pool.query(
+      `SELECT id, image_url, sort_order FROM ${PRODUCT_IMAGES_TABLE} WHERE product_id = $1 ORDER BY sort_order`,
+      [id]
+    );
+    res.json({ ...product, images: imagesResult.rows });
   } catch (err) {
     console.error('getProduct:', err);
     res.status(500).json({ error: 'Internal server error' });

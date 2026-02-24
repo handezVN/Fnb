@@ -2,6 +2,7 @@ import { Response } from 'express';
 import pool from '../config/database';
 import { AuthRequest } from '../middleware/auth';
 import { PRODUCTS_TABLE } from '../models/Product';
+import { PRODUCT_IMAGES_TABLE } from '../models/ProductImage';
 import { CATEGORIES_TABLE } from '../models/Category';
 import { MENUS_TABLE } from '../models/Menu';
 import type { Product } from '../models/Product';
@@ -59,7 +60,12 @@ export async function getMyStoreProduct(req: AuthRequest, res: Response): Promis
       res.status(404).json({ error: 'Product not found' });
       return;
     }
-    res.json(normalizePrice(result.rows[0]));
+    const product = normalizePrice(result.rows[0]);
+    const imagesResult = await pool.query(
+      `SELECT id, image_url, sort_order FROM ${PRODUCT_IMAGES_TABLE} WHERE product_id = $1 ORDER BY sort_order`,
+      [id]
+    );
+    res.json({ ...product, images: imagesResult.rows });
   } catch (err) {
     console.error('getMyStoreProduct:', err);
     res.status(500).json({ error: 'Internal server error' });
